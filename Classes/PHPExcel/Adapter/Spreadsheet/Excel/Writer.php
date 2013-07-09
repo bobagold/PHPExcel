@@ -207,6 +207,7 @@ class PHPExcel_Adapter_Spreadsheet_Excel_Writer extends PEAR
         if ($name == '') {
             $name = 'Sheet' . (count($this->_worksheets) + 1);
         }
+        $name = self::fixEncoding($name);
 
         $worksheet = new PHPExcel_Adapter_Spreadsheet_Excel_Writer_Worksheet($this, $name,
             $this->_firstSheet);
@@ -214,6 +215,21 @@ class PHPExcel_Adapter_Spreadsheet_Excel_Writer extends PEAR
         $this->_worksheets[] = $worksheet;
 
         return $worksheet;
+    }
+
+    private static $internalEncoding = 'UTF-8';
+
+    public static function setInternalEncoding($encoding = 'UTF-8')
+    {
+        self::$internalEncoding = $encoding;
+    }
+
+    public static function fixEncoding($name)
+    {
+        if (self::$internalEncoding != 'UTF-8') {
+            $name = PHPExcel_Shared_String::ConvertEncoding($name, 'UTF-8', self::$internalEncoding);
+        }
+        return $name;
     }
 
     /**

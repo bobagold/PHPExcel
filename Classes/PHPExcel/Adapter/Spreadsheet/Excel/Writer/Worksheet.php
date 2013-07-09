@@ -562,6 +562,12 @@ class PHPExcel_Adapter_Spreadsheet_Excel_Writer_Worksheet extends PEAR
         }
 
         $cell = $this->_getPhpExcelCell($row, $col, $format);
+        $this->setValueExplicit($cell, $str, $dataType);
+    }
+
+    private function setValueExplicit($cell, $str, $dataType)
+    {
+        $str = PHPExcel_Adapter_Spreadsheet_Excel_Writer::fixEncoding($str);
         $cell->setValueExplicit($str, $dataType);
         $this->_releasePhpExcelCell($cell);
     }
@@ -584,8 +590,7 @@ class PHPExcel_Adapter_Spreadsheet_Excel_Writer_Worksheet extends PEAR
     function writeNumber($row, $col, $num, $format = null)
     {
         $cell = $this->_getPhpExcelCell($row, $col, $format);
-        $cell->setValueExplicit($num, PHPExcel_Cell_DataType::TYPE_NUMERIC);
-        $this->_releasePhpExcelCell($cell);
+        $this->setValueExplicit($cell, $num, PHPExcel_Cell_DataType::TYPE_NUMERIC);
     }
 
     /**
@@ -606,8 +611,7 @@ class PHPExcel_Adapter_Spreadsheet_Excel_Writer_Worksheet extends PEAR
     function writeString($row, $col, $str, $format = null)
     {
         $cell = $this->_getPhpExcelCell($row, $col, $format);
-        $cell->setValueExplicit($str, PHPExcel_Cell_DataType::TYPE_STRING);
-        $this->_releasePhpExcelCell($cell);
+        $this->setValueExplicit($cell, $str, PHPExcel_Cell_DataType::TYPE_STRING);
     }
 
     /**
@@ -644,8 +648,7 @@ class PHPExcel_Adapter_Spreadsheet_Excel_Writer_Worksheet extends PEAR
     function writeBlank($row, $col, $format = null)
     {
         $cell = $this->_getPhpExcelCell($row, $col, $format);
-        $cell->setValueExplicit(null, PHPExcel_Cell_DataType::TYPE_NULL);
-        $this->_releasePhpExcelCell($cell);
+        $this->setValueExplicit($cell, null, PHPExcel_Cell_DataType::TYPE_NULL);
     }
 
     /**
@@ -667,8 +670,7 @@ class PHPExcel_Adapter_Spreadsheet_Excel_Writer_Worksheet extends PEAR
     function writeFormula($row, $col, $formula, $format = null)
     {
         $cell = $this->_getPhpExcelCell($row, $col, $format);
-        $cell->setValueExplicit($formula, PHPExcel_Cell_DataType::TYPE_FORMULA);
-        $this->_releasePhpExcelCell($cell);
+        $this->setValueExplicit($cell, $formula, PHPExcel_Cell_DataType::TYPE_FORMULA);
     }
 
     /**
