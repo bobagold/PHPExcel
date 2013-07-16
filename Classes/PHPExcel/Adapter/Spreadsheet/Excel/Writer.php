@@ -1,7 +1,5 @@
 <?php
 
-require_once('PEAR.php');
-
 /**
  * PHPExcel_Adapter_Spreadsheet_Excel_Writer
  *
